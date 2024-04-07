@@ -51,16 +51,21 @@ class TestCart:
 
         assert cart.products == {milk: 1, cookie: 3}
 
-    def test_cart_remove_product(self, filled_cart, milk, cookie, cat_food):
-        cat_food_cart_quantity = filled_cart.products[cat_food]
+    def test_cart_remove_product(self, filled_cart, milk):
+        milk_cart_quantity = filled_cart.products[milk]
 
+        filled_cart.remove_product(milk, 1)
+
+        assert filled_cart.products[milk] == milk_cart_quantity - 1
+
+    def test_cart_remove_all_products(self, filled_cart, milk, cookie, cat_food):
         filled_cart.remove_product(milk)
         filled_cart.remove_product(cookie, filled_cart.products[cookie] + 1)
-        filled_cart.remove_product(cat_food, 1)
+        filled_cart.remove_product(cat_food, filled_cart.products[cat_food])
 
         assert milk not in filled_cart.products
         assert cookie not in filled_cart.products
-        assert filled_cart.products[cat_food] == cat_food_cart_quantity - 1
+        assert cat_food not in filled_cart.products
 
     def test_cart_clear(self, filled_cart):
         filled_cart.clear()
