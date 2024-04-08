@@ -31,6 +31,10 @@ class Cart:
         Если remove_count не передан, то удаляется вся позиция
         Если remove_count больше, чем количество продуктов в позиции, то удаляется вся позиция
         """
+        if product not in self.products:
+            print('Этого товара нет в корзине')
+            return
+
         if not remove_count:
             del self.products[product]
             return
